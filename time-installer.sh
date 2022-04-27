@@ -55,7 +55,7 @@ fi
 
 # The time the installer takes to execute is found using the SECONDS builtin variable
 # REF: https://www.xmodulo.com/measure-elapsed-time-bash.html
-start_date=$(date)
+start_date=$(date +'%d/%m/%Y %H:%M:%S %Z')
 start_time=$SECONDS
 
 ./isf-install.sh -d -t py2

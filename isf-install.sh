@@ -7,7 +7,8 @@
 # 20.04.2022 - Modified the way pandas-msgpack is patch to support git 1.8.3.1 (soma)
 #            - Clones in-silico-framework if the repository is missing
 #            - Clones pandas-msgpack only if the repository is missing
-#            - Download conda packages only if a new version exists (wget -N)              
+#            - Download conda packages only if a new version exists (wget -N)
+#            - Download Anaconda only if a new version exists (wget -N)              
 
 usage() {
     cat << EOF
@@ -70,7 +71,7 @@ fi
 case "${target_python}" in
     "py2")
         echo "Downloading Anaconda2"
-        wget https://repo.anaconda.com/archive/Anaconda2-4.2.0-Linux-x86_64.sh --quiet
+        wget https://repo.anaconda.com/archive/Anaconda2-4.2.0-Linux-x86_64.sh -N --quiet
         anaconda_installer="Anaconda2-4.2.0-Linux-x86_64.sh"
         #conda_requirements="${ISF_HOME}/etc/isf2-https-requirements.txt"
         #pip_requirements="${ISF_HOME}/etc/isf2-pip-requirements.txt"
@@ -80,7 +81,7 @@ case "${target_python}" in
         ;;
     "py3")
         echo "Downloading Anaconda3"
-        wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh --quiet
+        wget https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh -N --quiet
         anaconda_installer="Anaconda3-2020.11-Linux-x86_64.sh"
         #conda_requirements="${ISF_HOME}/etc/isf3-https-requirements.txt"
         #pip_requirements="${ISF_HOME}/etc/isf3-pip-requirements.txt"

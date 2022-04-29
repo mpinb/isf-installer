@@ -10,20 +10,16 @@ usage() {
 Usage: ./time-install-isf3.sh -f <host-timings.txt>
 
     -h                          Display help
-    -d                          Download in-silico-framework dependencies.
 
     -f <host-timings.txt>       The file where the results of timing measurements are appended.
 EOF
 }
 
 # Reading command line options supported by the time-installer script
-while getopts "f:dh" opt; do
+while getopts "f:h" opt; do
     case "${opt}" in
         f)
             output_timings=${OPTARG}
-            ;;
-        d)
-            download_packages="true"
             ;;
         h)
             usage
@@ -49,12 +45,8 @@ fi
 start_date=$(date +'%d/%m/%Y %H:%M:%S %Z')
 start_time=$SECONDS
 
-# If online install desired then use 
-if [ ${download_packages} == "true" ]; then
-    ./isf-install.sh -d -t py3
-else
-    ./isf-install.sh -t py3
-fi
+# Setup In-Silico Framework (Python 3) [offline mode] 
+./isf-install.sh -t py3
 
 stop_time=$SECONDS
 elapsed_time=$(( stop_time - start_time ))

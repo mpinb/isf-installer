@@ -20,26 +20,44 @@ df_sco = pd.read_csv('sco3002-timings.txt',
                 parse_dates=['start_date'],
                 date_parser=custom_date_parser)
 df_sco['host'] = 'sco3002'
-df_sco['color'] = 'red'
+#df_sco['color'] = 'red' # uncomment for matplotlib
 
-# read timings data from axon
+# read timings data from axon (isf2 online)
 df_axon = pd.read_csv('axon-timings.txt',
                 #index_col='start_date',
                 parse_dates=['start_date'],
                 date_parser=custom_date_parser)
 df_axon['host'] = 'axon'
-df_axon['color'] = 'green'
+#df_axon['color'] = 'green'
 
-# read timings data from soma
+# read timings data from soma (isf2 online)
 df_soma = pd.read_csv('soma-timings.txt',
                 #index_col='start_date',
                 parse_dates=['start_date'],
                 date_parser=custom_date_parser)
 df_soma['host'] = 'soma'
-df_soma['color'] = 'blue'
+#df_soma['color'] = 'blue'
+
+# read timings data from axon (isf3 offline)
+df_axon_offline = pd.read_csv('axon-timings-isf3.txt',
+                #index_col='start_date',
+                parse_dates=['start_date'],
+                date_parser=custom_date_parser)
+df_axon_offline['host'] = 'axon (offline)'
+#df_axon_offline['color'] = 'yellow'
+
+# read timings data from soma (isf3 offline)
+df_soma_offline = pd.read_csv('soma-timings-isf3.txt',
+                #index_col='start_date',
+                parse_dates=['start_date'],
+                date_parser=custom_date_parser)
+df_soma_offline['host'] = 'soma (offline)'
+#df_soma_offline['color'] = 'brown'
+
 
 # Concatenate and sort data from all three hosts
-df_all = pd.concat([df_sco, df_axon, df_soma])
+#df_all = pd.concat([df_sco, df_axon, df_soma, df_axon_offline, df_soma_offline])
+df_all = pd.concat([df_axon, df_soma, df_axon_offline, df_soma_offline])
 #df_all.set_index('start_date', inplace=True)
 df_all.info()
 print(df_all)
@@ -51,7 +69,8 @@ print(df_all)
 # Plotting scatter plots using seaborn
 # REF:  https://stackoverflow.com/questions/14885895/color-by-column-values-in-matplotlib
 #sns.set(style='ticks')
-host_order = ['sco3002', 'axon', 'soma']
+#host_order = ['sco3002', 'axon', 'soma', 'axon (offline)', 'soma (offline)']
+host_order = ['axon', 'soma', 'axon (offline)', 'soma (offline)']
 g = sns.relplot(data=df_all, x='start_date', y='elapsed_time(s)', hue='host', hue_order=host_order)
 g._legend.remove()
 # REF: https://stackoverflow.com/questions/4700614/how-to-put-the-legend-outside-the-plot-in-matplotlib
@@ -61,7 +80,7 @@ plt.gca().legend(loc='center left', title='Host',
                 fontsize=14, title_fontsize=16)
 plt.gca().set_xlabel('start date', fontsize=16)
 plt.gca().set_ylabel('elapsed time\n(seconds)', fontsize=16)
-plt.gca().set_title('Installing ISF python environment (Anaconda2)',
+plt.gca().set_title('Installing ISF2 and ISF3(offline) conda envs',
     fontdict= {'fontsize': 16, 'fontweight': 'bold'})
 date_format = mpl_dates.DateFormatter('%d. %b %Hh')
 plt.gca().xaxis.set_major_formatter(date_format) # format the dates in plot
